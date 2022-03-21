@@ -65,12 +65,6 @@ contract CryptoDevsDAO is Initializable {
     Proposal public proposal;
     address public owner;
 
-
-    // Create a mapping of ID to Proposal
-    // mapping(uint256 => Proposal) public proposals;
-    // Number of proposals that have been created
-    // uint256 public numProposals;
-
     // Create an enum named Vote containing possible options for a vote
     enum Vote {
         YAY, // YAY = 0
@@ -79,14 +73,6 @@ contract CryptoDevsDAO is Initializable {
 
     IFakeNFTMarketplace nftMarketplace;
     ICryptoDevsNFT cryptoDevsNFT;
-
-    // Create a payable constructor which initializes the contract
-    // instances for FakeNFTMarketplace and CryptoDevsNFT
-    // The payable allows this constructor to accept an ETH deposit when it is being deployed
-    // constructor(address _nftMarketplace, address _cryptoDevsNFT) payable {
-    //     nftMarketplace = IFakeNFTMarketplace(_nftMarketplace);
-    //     cryptoDevsNFT = ICryptoDevsNFT(_cryptoDevsNFT);
-    // }
 
     function initialize(uint256 _nftTokenId, address _nftMarketplace, address _cryptoDevsNFT) initializer public payable{
 
@@ -99,25 +85,6 @@ contract CryptoDevsDAO is Initializable {
         owner = msg.sender;
 
     }
-
-    /// @dev createProposal allows a CryptoDevsNFT holder to create a new proposal in the DAO
-    /// @param _nftTokenId - the tokenID of the NFT to be purchased from FakeNFTMarketplace if this proposal passes
-    /// @return Returns the proposal index for the newly created proposal
-    // function createProposal(uint256 _nftTokenId)
-    //     external
-    //     nftHolderOnly
-    //     returns (uint256)
-    // {
-    //     require(nftMarketplace.available(_nftTokenId), "NFT_NOT_FOR_SALE");
-    //     Proposal storage proposal = proposals[numProposals];
-    //     proposal.nftTokenId = _nftTokenId;
-    //     // Set the proposal's voting deadline to be (current time + 5 minutes)
-    //     proposal.deadline = block.timestamp + 5 minutes;
-
-    //     numProposals++;
-
-    //     return numProposals - 1;
-    // }
 
     /// @dev voteOnProposal allows a CryptoDevsNFT holder to cast their vote on an active proposal
     /// @param vote - the type of vote they want to cast
