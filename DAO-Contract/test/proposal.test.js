@@ -1,6 +1,7 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
-const { CRYPTODEVS_NFT_CONTRACT_ADDRESS } = require("../constants");
+// const { CRYPTODEVS_NFT_CONTRACT_ADDRESS } = require("../constants");
+const METADATA_URL = "https://nft-collection-dapp-kappa.vercel.app/api/";
 
 describe("Proposal Factory", function () {
 
@@ -12,7 +13,23 @@ describe("Proposal Factory", function () {
   
   it("Should Deploy Proposal Factory & Create New Proposal Contract", async function () {
 
-    // Deploy the FakeNFTMarketplace contract first
+    // Deploy the NFT contract first
+    const metadataURL = METADATA_URL;
+    const cryptoDevsContract = await ethers.getContractFactory("CryptoDevs");
+    const deployedCryptoDevsContract = await cryptoDevsContract.deploy(
+      metadataURL,
+    );
+    console.log("Owner Of Contract",await deployedCryptoDevsContract.owner())
+    console.log("Owner Address", owner.address)
+    console.log(
+      "Crypto Devs Contract Address:",
+      deployedCryptoDevsContract.address
+    );
+    await deployedCryptoDevsContract.mint({value: ethers.utils.parseEther("0.001")});
+
+
+
+    // Deploy the FakeNFTMarketplace contract second
     const FakeNFTMarketplace = await ethers.getContractFactory(
       "FakeNFTMarketplace"
     );
@@ -21,30 +38,43 @@ describe("Proposal Factory", function () {
     console.log("FakeNFTMarketplace deployed to: ", fakeNftMarketplace.address);
 
 
-    // Deploy the ProposalFactory contract second
+    // Deploy the ProposalFactory contract third
     const ProposalFactory = await ethers.getContractFactory("ProposalFactory");    
     const proposal_factory = await ProposalFactory.deploy();
     await proposal_factory.deployed();
     console.log("ProposalFactory deployed to: ", proposal_factory.address);
 
-
     const Proposal = await ethers.getContractFactory("CryptoDevsDAO");
 
-    await proposal_factory.createProposal(1, fakeNftMarketplace.address, CRYPTODEVS_NFT_CONTRACT_ADDRESS, {value: ethers.utils.parseEther("0.1")});
+    await proposal_factory.createProposal(1, fakeNftMarketplace.address, deployedCryptoDevsContract.address, {value: ethers.utils.parseEther("1")});
 
     console.log("Deployed Proposal Address", await proposal_factory.getDeployedProposals());
     proposed_contract = await Proposal.attach((await proposal_factory.getDeployedProposals())[0]);
 
     proposalTxn = await proposed_contract.getProposal();
 
-    console.log(proposalTxn.nftTokenId.toNumber());
+    console.log("Token ID ",proposalTxn.nftTokenId.toNumber());
     console.log("Proposal Contract Balance ", ethers.utils.formatEther(await ethers.provider.getBalance(proposed_contract.address)));
     console.log("Proposal Factory Contract Balance ", ethers.utils.formatEther(await ethers.provider.getBalance(proposal_factory.address)));
     
-    // expect(await proposed_contract.initialize(1, fakeNftMarketplace.address, CRYPTODEVS_NFT_CONTRACT_ADDRESS, {value: ethers.utils.parseEther("0.1")})).to.be.revertedWith("Initializable: contract is already initialized");
+    await proposed_contract.voteOnProposal(0);
 
-    // await proposed_contract.voteOnProposal(0);
+    proposalTxn = await proposed_contract.getProposal();
 
+    console.log("Yay Votes",proposalTxn.yayVotes.toNumber());
+    console.log("Nay Votes", proposalTxn.nayVotes.toNumber());
+
+    
+    // INCREASE TIME AND EXECUTE PROPOSAL
+    await ethers.provider.send('evm_increaseTime', [1800]);
+    await ethers.provider.send('evm_mine');
+    await proposed_contract.executeProposal();
+    
+    console.log("Proposal Contract Balance After Execution ", ethers.utils.formatEther(await ethers.provider.getBalance(proposed_contract.address)));
+    console.log("Owner Of Proposal Contract",await proposed_contract.owner())
+    
+    console.log("Proposal Factory Contract Balance After Execution ", ethers.utils.formatEther(await ethers.provider.getBalance(proposal_factory.address)));
+    console.log("fakeNftMarketplace Contract Balance After Execution ", ethers.utils.formatEther(await ethers.provider.getBalance(fakeNftMarketplace.address)));
     
   });
 

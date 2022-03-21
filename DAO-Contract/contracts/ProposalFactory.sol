@@ -44,6 +44,8 @@ contract ProposalFactory {
         return deployedProposals;
     }
 
+    fallback() external payable {}
+
     modifier nftHolderOnly() {
         require(cryptoDevsNFT.balanceOf(msg.sender) > 0, "NOT_A_DAO_MEMBER");
         _;

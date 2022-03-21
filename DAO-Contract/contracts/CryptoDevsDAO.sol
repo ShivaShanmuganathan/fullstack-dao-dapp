@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+// import "@openzeppelin/contracts/access/Ownable.sol";
 
 // We will add the Interfaces here
 /**
@@ -41,7 +41,7 @@ interface ICryptoDevsNFT {
         returns (uint256);
 }
 
-contract CryptoDevsDAO is Initializable, Ownable {
+contract CryptoDevsDAO is Initializable {
 
     // We will write contract code here
     // Create a struct named Proposal containing all relevant information
@@ -63,6 +63,7 @@ contract CryptoDevsDAO is Initializable, Ownable {
     mapping(uint256 => bool) voters;
 
     Proposal public proposal;
+    address public owner;
 
 
     // Create a mapping of ID to Proposal
@@ -95,7 +96,7 @@ contract CryptoDevsDAO is Initializable, Ownable {
         proposal.nftTokenId = _nftTokenId;
         // Set the proposal's voting deadline to be (current time + 5 minutes)
         proposal.deadline = block.timestamp + 5 minutes;
-
+        owner = msg.sender;
 
     }
 
@@ -122,8 +123,8 @@ contract CryptoDevsDAO is Initializable, Ownable {
     /// @param vote - the type of vote they want to cast
     function voteOnProposal(Vote vote)
         external
-        // nftHolderOnly
-        // activeProposalOnly()
+        nftHolderOnly
+        activeProposalOnly
     {
         // Proposal storage proposal = proposals[proposalIndex];
 
@@ -151,13 +152,14 @@ contract CryptoDevsDAO is Initializable, Ownable {
     /// @dev executeProposal allows any CryptoDevsNFT holder to execute a proposal after it's deadline has been exceeded
     function executeProposal()
         external
-        // nftHolderOnly
-        inactiveProposalOnly()
+        nftHolderOnly
+        inactiveProposalOnly
     {
         // Proposal storage proposal = proposals[proposalIndex];
 
         // If the proposal has more YAY votes than NAY votes
         // purchase the NFT from the FakeNFTMarketplace
+        
         if (proposal.yayVotes > proposal.nayVotes) {
             uint256 nftPrice = nftMarketplace.getPrice();
             require(address(this).balance >= nftPrice, "NOT_ENOUGH_FUNDS");
@@ -170,7 +172,7 @@ contract CryptoDevsDAO is Initializable, Ownable {
     
     /// @dev withdrawEther allows the contract owner (deployer) to withdraw the ETH from the contract
     function withdrawEther() internal {
-        payable(owner()).transfer(address(this).balance);
+        payable(owner).transfer(address(this).balance);
     }
 
 
