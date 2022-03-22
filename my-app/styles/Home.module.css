@@ -13,6 +13,7 @@
   border-top: 1px solid #eaeaea;
   justify-content: center;
   align-items: center;
+  font-family: 'Palette Mosaic', cursive;
 }
 
 .image {
@@ -22,14 +23,16 @@
 }
 
 .title {
-  font-size: 2rem;
+  font-size: 3rem;
   margin: 2rem 0;
+  font-family: 'Palette Mosaic', cursive;
 }
 
 .description {
-  line-height: 1;
+  line-height: 2;
   margin: 2rem 0;
   font-size: 1.2rem;
+  font-family: 'Libre Baskerville', serif;
 }
 
 .button {
@@ -46,13 +49,14 @@
 
 .button2 {
   border-radius: 4px;
-  background-color: indigo;
+  background-color: blue;
   border: none;
   color: #ffffff;
   font-size: 15px;
   padding: 10px;
   cursor: pointer;
   margin-right: 2%;
+  margin-left: 1rem;
   margin-top: 1rem;
 }
 

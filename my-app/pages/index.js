@@ -361,14 +361,19 @@ export default function Home() {
     <div>
       <Head>
         <title>CryptoDevs DAO</title>
+
         <meta name="description" content="CryptoDevs DAO" />
         <link rel="icon" href="/favicon.ico" />
+        <link rel="preconnect" href="https://fonts.googleapis.com"></link>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin></link>
+        <link href="https://fonts.googleapis.com/css2?family=Palette+Mosaic&family=Libre+Baskerville&family=Raleway:wght@600&display=swap" rel="stylesheet"></link>
+
       </Head>
 
       <div className={styles.main}>
         <div>
-          <h1 className={styles.title}>Welcome to Crypto Devs!</h1>
-          <div className={styles.description}>Welcome to the DAO!</div>
+          <h1 className={styles.title}>Welcome to the DAO!</h1>
+          {/* <div className={styles.description}>Welcome to the DAO!</div> */}
           <div className={styles.description}>
             Your CryptoDevs NFT Balance: {nftBalance}
             <br />
@@ -398,7 +403,7 @@ export default function Home() {
       </div>
 
       <footer className={styles.footer}>
-        Made with &#10084; by Crypto Devs
+        MADE WITH &#10084; BY SHIVA
       </footer>
     </div>
   );
