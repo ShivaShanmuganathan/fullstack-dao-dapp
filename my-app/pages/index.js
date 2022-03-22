@@ -434,7 +434,7 @@ export default function Home() {
       </div>
 
       <footer className="font-Cinzel font-bold text-s text-center pt-8 pb-4">
-        <a href="https://github.com/ShivaShanmuganathan" target="_blank">
+        <a href="https://github.com/ShivaShanmuganathan" target="_blank" rel="noopener noreferrer">
         MADE WITH &#10084; BY SHIVA
         </a>
       </footer>
