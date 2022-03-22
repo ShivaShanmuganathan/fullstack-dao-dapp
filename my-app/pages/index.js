@@ -6,6 +6,7 @@ import Web3Modal from "web3modal";
 import {
   CRYPTODEVS_DAO_ABI,
   CRYPTODEVS_DAO_CONTRACT_ADDRESS,
+  PROPOSAL_ABI,
   CRYPTODEVS_NFT_ABI,
   CRYPTODEVS_NFT_CONTRACT_ADDRESS,
 } from "../constants";
@@ -58,7 +59,7 @@ export default function Home() {
     try {
       const provider = await getProviderOrSigner();
       const contract = getDaoContractInstance(provider);
-      const daoNumProposals = await contract.numProposals();
+      const daoNumProposals = (await contract.getDeployedProposals()).length;      
       setNumProposals(daoNumProposals.toString());
     } catch (error) {
       console.error(error);
