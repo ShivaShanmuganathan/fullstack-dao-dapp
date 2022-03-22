@@ -365,7 +365,7 @@ export default function Home() {
         <meta name="description" content="CryptoDevs DAO" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com"></link>
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin></link>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin></link>
         <link href="https://fonts.googleapis.com/css2?family=Palette+Mosaic&family=Libre+Baskerville&family=Raleway:wght@600&display=swap" rel="stylesheet"></link>
 
       </Head>
@@ -390,6 +390,7 @@ export default function Home() {
             </button>
             <button
               className={styles.button}
+              
               onClick={() => setSelectedTab("View Proposals")}
             >
               View Proposals

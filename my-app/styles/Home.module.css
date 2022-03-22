@@ -36,16 +36,34 @@
 }
 
 .button {
-  border-radius: 4px;
-  background-color: blue;
-  border: none;
-  color: #ffffff;
-  font-size: 15px;
-  padding: 10px;
-  width: 200px;
+  height: 45px;
+  border: 0;
+  width: auto;
+  padding-left: 40px;
+  padding-right: 40px;
+  border-radius: 5px;
   cursor: pointer;
-  margin-right: 2%;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  margin-right: 1rem;
+  background-size: 200% 200%;
+  background-image: linear-gradient(
+    to right, 
+    #ff8177 0%,
+    #ff867a 0%,
+    #ff8c7f 21%,
+    #f99185 52%,
+    #cf556c 78%,
+    #b12a5b 100%
+  );  
+  animation: gradient-animation 3s ease infinite;
+  
+  
 }
+
+
+
 
 .button2 {
   border-radius: 4px;
@@ -58,6 +76,8 @@
   margin-right: 2%;
   margin-left: 1rem;
   margin-top: 1rem;
+  margin-bottom: 1rem;
+
 }
 
 .proposalCard {
@@ -83,5 +103,40 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+  }
+}
+
+/* KeyFrames */
+@-webkit-keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@-moz-keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
