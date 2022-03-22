@@ -62,6 +62,9 @@ describe("Proposal Factory", function () {
 
     console.log("Yay Votes",proposalTxn.yayVotes.toNumber());
     console.log("Nay Votes", proposalTxn.nayVotes.toNumber());
+    console.log("Number of Proposals", (await proposal_factory.getDeployedProposals()).length)
+
+
 
     
     // INCREASE TIME AND EXECUTE PROPOSAL
@@ -129,6 +132,7 @@ describe("Proposal Factory", function () {
 
     console.log("Yay Votes",proposalTxn.yayVotes.toNumber());
     console.log("Nay Votes", proposalTxn.nayVotes.toNumber());
+    console.log("Number of Proposals", (await proposal_factory.getDeployedProposals()).length)
 
     
     // INCREASE TIME AND EXECUTE PROPOSAL

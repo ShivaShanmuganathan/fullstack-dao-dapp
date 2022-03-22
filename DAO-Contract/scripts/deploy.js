@@ -11,20 +11,27 @@ async function main() {
 
   console.log("FakeNFTMarketplace deployed to: ", fakeNftMarketplace.address);
 
-  // Now deploy the CryptoDevsDAO contract
-  const CryptoDevsDAO = await ethers.getContractFactory("CryptoDevsDAO");
-  const cryptoDevsDAO = await CryptoDevsDAO.deploy(
-    fakeNftMarketplace.address,
-    CRYPTODEVS_NFT_CONTRACT_ADDRESS,
-    {
-      // This assumes your account has at least 1 ETH in it's account
-      // Change this value as you want
-      value: ethers.utils.parseEther("0.01"),
-    }
-  );
-  await cryptoDevsDAO.deployed();
+  // Now deploy the proposal factory
+  const ProposalFactory = await ethers.getContractFactory("ProposalFactory");    
+  const proposal_factory = await ProposalFactory.deploy();
+  await proposal_factory.deployed();
+  console.log("ProposalFactory deployed to: ", proposal_factory.address);
+  const Proposal = await ethers.getContractFactory("CryptoDevsDAO");
 
-  console.log("CryptoDevsDAO deployed to: ", cryptoDevsDAO.address);
+  // Now deploy the CryptoDevsDAO contract
+  (await proposal_factory.createProposal(1, fakeNftMarketplace.address, CRYPTODEVS_NFT_CONTRACT_ADDRESS, {value: ethers.utils.parseEther("0.01")})).wait();
+  console.log("createProposal complete")
+
+  console.log("Deployed Proposal Address", await proposal_factory.getDeployedProposals());
+  proposed_contract = Proposal.attach((await proposal_factory.getDeployedProposals())[0]);
+
+  proposalTxn = await proposed_contract.getProposal();
+
+  console.log("Token ID ",proposalTxn.nftTokenId.toNumber());
+  console.log("Proposal Contract Balance ", ethers.utils.formatEther(await ethers.provider.getBalance(proposed_contract.address)));
+  console.log("Proposal Factory Contract Balance ", ethers.utils.formatEther(await ethers.provider.getBalance(proposal_factory.address)));
+  console.log("1st DAO Contract Deployed To: ", proposed_contract.address);
+
 }
 
 main()
