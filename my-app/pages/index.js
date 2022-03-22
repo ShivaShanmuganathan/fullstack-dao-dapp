@@ -1,5 +1,5 @@
 import { Contract, providers } from "ethers";
-import { formatEther } from "ethers/lib/utils";
+import { formatEther, parseEther } from "ethers/lib/utils";
 import Head from "next/head";
 import { useEffect, useRef, useState } from "react";
 import Web3Modal from "web3modal";
@@ -24,6 +24,8 @@ export default function Home() {
   const [nftBalance, setNftBalance] = useState(0);
   // Fake NFT Token ID to purchase. Used when creating a proposal.
   const [fakeNftTokenId, setFakeNftTokenId] = useState("");
+  // Fake NFT Token ID to purchase. Used when creating a proposal.
+  const [costOfToken, setCostOfToken] = useState("");
   // One of "Create Proposal" or "View Proposals"
   const [selectedTab, setSelectedTab] = useState("");
   // True if waiting for a transaction to be mined, false otherwise.
@@ -84,6 +86,7 @@ export default function Home() {
     try {
       const signer = await getProviderOrSigner(true);
       const daoContract = getDaoContractInstance(signer);
+      console.log("Token Cost", (parseEther(costOfToken)).toString() );
       const txn = await daoContract.createProposal(fakeNftTokenId, FAKE_NFT_MARKETPLACE_ADDRESS, CRYPTODEVS_NFT_CONTRACT_ADDRESS);
       setLoading(true);
       await txn.wait();
@@ -283,15 +286,40 @@ export default function Home() {
     } else {
       return (
         <div className={styles.container}>
-          <label>Fake NFT Token ID to Purchase: </label>
-          <input
-            placeholder="0"
-            type="number"
-            onChange={(e) => setFakeNftTokenId(e.target.value)}
-          />
-          <button className={styles.button3} onClick={createProposal}>
-            CREATE
-          </button>
+          {/* <label>Fake NFT Token ID to Purchase: </label> */}
+          <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+          <div className="mb-4">
+            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="TokenId">
+              Fake NFT Token ID to Purchase
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-half py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+              type="number" 
+              placeholder="0"
+              onChange={(e) => setFakeNftTokenId(e.target.value)}
+            />
+            </div>
+
+            <div className="mb-6">
+              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="Cost">
+                Cost of TokenID [in Ether]
+              </label>
+              <input
+                className="shadow appearance-none border rounded w-half py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
+                type="number" 
+                placeholder="0"
+                onChange={(e) => setCostOfToken(e.target.value)}
+              />
+              
+            </div>
+            
+            <button className={styles.button3} onClick={createProposal}>
+              CREATE
+            </button>
+          </form>
+
+          
+          
         </div>
       );
     }
@@ -316,6 +344,7 @@ export default function Home() {
         <div>
           {proposals.map((p, index) => (
             <div key={index} className={styles.proposalCard}>
+
               <p>Proposal ID: {p.proposalId}</p>
               <p>Fake NFT to Purchase: {p.nftTokenId}</p>
               <p>Deadline: {p.deadline.toLocaleString()}</p>
@@ -373,7 +402,7 @@ export default function Home() {
 
       <div className={styles.main}>
         <div>
-          <h1 className={styles.title}>Welcome to the DAO!</h1>
+          <h1 className="font-Cinzel font-bold text-5xl pt-8">Welcome to the DAO</h1>
           {/* <div className={styles.description}>Welcome to the DAO!</div> */}
           <div className={styles.description}>
             Your CryptoDevs NFT Balance: {nftBalance}
@@ -404,8 +433,10 @@ export default function Home() {
         </div>
       </div>
 
-      <footer className={styles.footer}>
+      <footer className="font-Cinzel font-bold text-s text-center pt-8 pb-4">
+        <a href="https://github.com/ShivaShanmuganathan" target="_blank">
         MADE WITH &#10084; BY SHIVA
+        </a>
       </footer>
     </div>
   );
