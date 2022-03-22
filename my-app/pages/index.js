@@ -289,8 +289,8 @@ export default function Home() {
             type="number"
             onChange={(e) => setFakeNftTokenId(e.target.value)}
           />
-          <button className={styles.button2} onClick={createProposal}>
-            Create
+          <button className={styles.button3} onClick={createProposal}>
+            CREATE
           </button>
         </div>
       );
@@ -325,13 +325,13 @@ export default function Home() {
               {p.deadline.getTime() > Date.now() && !p.executed ? (
                 <div className={styles.flex}>
                   <button
-                    className={styles.button2}
+                    className={styles.button4}
                     onClick={() => voteOnProposal(p.proposalId, "YAY")}
                   >
                     Vote YAY
                   </button>
                   <button
-                    className={styles.button2}
+                    className={styles.button5}
                     onClick={() => voteOnProposal(p.proposalId, "NAY")}
                   >
                     Vote NAY
@@ -340,9 +340,10 @@ export default function Home() {
               ) : p.deadline.getTime() < Date.now() && !p.executed ? (
                 <div className={styles.flex}>
                   <button
-                    className={styles.button2}
+                    className={styles.button5}
                     onClick={() => executeProposal(p.proposalId)}
                   >
+                  {/* <button className="w-full bg-pink-500 text-white font-bold py-2 px-12 rounded" onClick={() => rentNft(nft)}>Rent</button> */}
                     Execute Proposal{" "}
                     {p.yayVotes > p.nayVotes ? "(YAY)" : "(NAY)"}
                   </button>
@@ -383,7 +384,7 @@ export default function Home() {
           </div>
           <div className={styles.flex}>
             <button
-              className={styles.button}
+              className={styles.button3}
               onClick={() => setSelectedTab("Create Proposal")}
             >
               Create Proposal

@@ -5,7 +5,7 @@
   justify-content: center;
   align-items: center;
   font-family: "Courier New", Courier, monospace;
-  background-color: #ddd;
+  background-color: rgb(245, 245, 245);
 }
 
 .footer {
@@ -47,7 +47,9 @@
   font-size: 16px;
   font-weight: bold;
   color: white;
-  margin-right: 1rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  
   background-size: 200% 200%;
   background-image: linear-gradient(
     to right, 
@@ -59,6 +61,123 @@
     #b12a5b 100%
   );  
   animation: gradient-animation 4s ease infinite;
+  
+}
+
+/* .button4 {
+  height: 45px;
+  border: 0;
+  width: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 0px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  
+  background-size: 200% 200%;
+  background-image: linear-gradient(
+    to right, 
+    #ff8177 0%,
+    #ff867a 0%,
+    #ff8c7f 21%,
+    #f99185 52%,
+    #cf556c 78%,
+    #b12a5b 100%
+  );  
+  animation: gradient-animation 4s ease infinite;
+  background-color: black;  
+  
+} */
+
+.button5 {
+  top: 0;
+  left: 0;
+  transition: all .15s linear 0s;
+  position: relative;
+  display: inline-block;
+  padding: 15px 25px;
+  background-color: black;
+  
+  text-transform: uppercase;
+  color: white;
+  letter-spacing: 1px;
+  
+  box-shadow: 3px 3px 10px gray;
+  text-decoration: none;
+  cursor:pointer;
+  
+}
+
+.button4 {
+  top: 0;
+  left: 0;
+  transition: all .15s linear 0s;
+  position: relative;
+  display: inline-block;
+  padding: 15px 25px;
+  background-color: rgb(16, 71, 48);
+  
+  text-transform: uppercase;
+  color: white;
+  letter-spacing: 1px;
+  
+  box-shadow: 3px 3px 10px gray;
+  text-decoration: none;
+  cursor:pointer;
+  margin-right: 1rem;
+}
+
+.button6 {
+  top: 0;
+  left: 0;
+  transition: all .15s linear 0s;
+  position: relative;
+  display: inline-block;
+  padding: 15px 25px;
+  background-color: rgba(202, 44, 16, 0.692);
+  margin-left: 1rem;
+  text-transform: uppercase;
+  color: white;
+  letter-spacing: 1px;
+  
+  box-shadow: 3px 3px 10px gray;
+  text-decoration: none;
+  cursor:pointer;
+}
+
+.button3 {
+  height: 45px;
+  border: 0;
+  width: auto;
+  padding-left: 40px;
+  padding-right: 40px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  
+  /* background-size: 200% 200%; */
+  background-color: black;  
+  /* animation: gradient-animation 4s ease infinite; */
+
+  /* background-size: 200% 200%;
+  background-image: linear-gradient(
+    to left, 
+    #f7f7f7 0%,
+    #e9e6e6 0%,
+    #dfdfdf 21%,
+    #535353 52%,
+    #242323 78%,
+    #000000 100%
+  );  
+  animation: gradient-animation 4s ease infinite; */
   
   
 }
