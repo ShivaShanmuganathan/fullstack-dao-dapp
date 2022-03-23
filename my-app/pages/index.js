@@ -133,7 +133,7 @@ export default function Home() {
   const fetchAllProposals = async () => {
     try {
       const proposals = [];
-      for (let i = 0; i < numProposals; i++) {
+      for (let i = numProposals-1; i >= 0; i--) {
         const proposal = await fetchProposalById(i);
         proposals.push(proposal);
       }
@@ -298,7 +298,8 @@ export default function Home() {
     if (loading) {
       return (
         <div className={styles.description}>
-          Loading... Waiting for transaction...
+          ...Waiting For Transaction...
+          <img className={styles.image2} src="/block1.gif" />
         </div>
       );
     } else if (nftBalance === 0) {
@@ -355,7 +356,8 @@ export default function Home() {
     if (loading) {
       return (
         <div className={styles.description}>
-          Loading... Waiting for transaction...
+          Loading Transaction...
+          <img className={styles.image2} src="/block1.gif" />
         </div>
       );
     } else if (proposals.length === 0) {

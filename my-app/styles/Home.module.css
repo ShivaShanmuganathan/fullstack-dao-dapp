@@ -23,6 +23,12 @@
   margin-left: 10%;
   /* background-color: blue; */
 }
+.image2 {
+  width: 50%;
+  height: 50%;
+  /* margin-left: 10%; */
+  /* background-color: blue; */
+}
 .Home_image{
   width: 50%;
   height: 50%;
@@ -137,6 +143,7 @@
   box-shadow: 3px 3px 10px gray;
   text-decoration: none;
   cursor:pointer;
+  font-family: 'Playfair Display', serif;
   margin-right: 1rem;
 }
 
