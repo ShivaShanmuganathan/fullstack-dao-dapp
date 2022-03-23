@@ -12,6 +12,9 @@ import {
   CRYPTODEVS_NFT_CONTRACT_ADDRESS,
 } from "../constants";
 import styles from "../styles/Home.module.css";
+import { LottiePlayer } from 'lottie-web';
+// import Lottie from "react-lottie";
+
 
 export default function Home() {
   // ETH Balance of the DAO contract
@@ -33,6 +36,8 @@ export default function Home() {
   // True if user has connected their wallet, false otherwise
   const [walletConnected, setWalletConnected] = useState(false);
   const web3ModalRef = useRef();
+  const ref = useRef();
+  const [lottie, setLottie] = useState("");
 
   // Helper function to connect wallet
   const connectWallet = async () => {
@@ -228,6 +233,26 @@ export default function Home() {
     );
   };
 
+  useEffect(() => {
+    import('lottie-web').then((Lottie) => setLottie(Lottie.default));
+  }, []);
+
+  useEffect(() => {
+    if (lottie && ref.current) {
+      const animation = lottie.loadAnimation({
+        container: ref.current,
+        renderer: 'svg',
+        loop: true,
+        autoplay: true,
+        // path to your animation file, place it inside public folder
+        path: '/lf30_editor_bmxoknqd.json',
+      });
+
+      return () => animation.destroy();
+    }
+  }, [lottie]);
+
+
   // piece of code that runs everytime the value of `walletConnected` changes
   // so when a wallet connects or disconnects
   // Prompts user to connect wallet if not connected
@@ -350,7 +375,7 @@ export default function Home() {
               <p>Deadline: {p.deadline.toLocaleString()}</p>
               <p>Yay Votes: {p.yayVotes}</p>
               <p>Nay Votes: {p.nayVotes}</p>
-              <p>Executed?: {p.executed.toString()}</p>
+              <p>Executed: {p.executed.toString()}</p>
               {p.deadline.getTime() > Date.now() && !p.executed ? (
                 <div className={styles.flex}>
                   <button
@@ -427,8 +452,10 @@ export default function Home() {
           </div>
           {renderTabs()}
         </div>
-        <div>
-          <img className={styles.image} src="/cryptodevs/0.svg" />
+        <div className={styles.Home_image}>
+          {/* <img className={styles.image} src="/cryptodevs/0.svg" /> */}
+          <div className={styles.image} ref={ref} />
+          {/* <img className={styles.image} src="/animation_500_l13867tp.gif" /> */}
         </div>
       </div>
 

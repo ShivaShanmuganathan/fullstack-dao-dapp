@@ -5,7 +5,7 @@
   justify-content: center;
   align-items: center;
   font-family: "Courier New", Courier, monospace;
-  background-color: rgb(245, 245, 245);
+  background-color: rgb(241 245 249);
 }
 
 /* .footer {
@@ -18,9 +18,14 @@
 } */
 
 .image {
-  width: 70%;
+  width: 85%;
+  height: 85%;
+  margin-left: 10%;
+  /* background-color: blue; */
+}
+.Home_image{
+  width: 50%;
   height: 50%;
-  margin-left: 20%;
 }
 
 /* .title {
@@ -111,6 +116,8 @@
   box-shadow: 3px 3px 10px gray;
   text-decoration: none;
   cursor:pointer;
+  font-family: 'Playfair Display', serif;
+  letter-spacing: 1px;
   
 }
 
@@ -240,7 +247,7 @@
   margin-bottom: 2.5rem;
   border-radius: 0% 0% 0% 0% / 0% 0% 0% 0% ;
   background: #ffffff;
-  box-shadow: 20px 20px rgba(0,0,0,.15);
+  box-shadow: 20px 20px rgba(0,0,0,.20);
   transition: all .4s ease;
 
 }
