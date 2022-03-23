@@ -8,14 +8,14 @@
   background-color: rgb(245, 245, 245);
 }
 
-.footer {
+/* .footer {
   display: flex;
   padding: 2rem 0;
   border-top: 1px solid #eaeaea;
   justify-content: center;
   align-items: center;
   font-family: 'Palette Mosaic', cursive;
-}
+} */
 
 .image {
   width: 70%;
@@ -23,11 +23,11 @@
   margin-left: 20%;
 }
 
-.title {
+/* .title {
   font-size: 3rem;
   margin: 2rem 0;
   font-family: 'Palette Mosaic', cursive;
-}
+} */
 
 .description {
   line-height: 2;
@@ -46,6 +46,8 @@
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;
+  font-family: 'Playfair Display', serif;
+  letter-spacing: 1px;
   color: white;
   margin-left: 0.5rem;
   margin-right: 0.5rem;
@@ -101,11 +103,11 @@
   display: inline-block;
   padding: 15px 25px;
   background-color: black;
-  
+  border-radius: 5px;
   text-transform: uppercase;
   color: white;
   letter-spacing: 1px;
-  
+  margin-top: 0.5rem;
   box-shadow: 3px 3px 10px gray;
   text-decoration: none;
   cursor:pointer;
@@ -120,11 +122,11 @@
   display: inline-block;
   padding: 15px 25px;
   background-color: rgb(16, 71, 48);
-  
+  border-radius: 5px;
   text-transform: uppercase;
   color: white;
   letter-spacing: 1px;
-  
+  margin-top: 0.5rem;
   box-shadow: 3px 3px 10px gray;
   text-decoration: none;
   cursor:pointer;
@@ -159,6 +161,8 @@
   cursor: pointer;
   font-size: 16px;
   font-weight: bold;
+  font-family: 'Playfair Display', serif;
+  letter-spacing: 1px;
   color: white;
   margin-left: 0.5rem;
   margin-right: 0.5rem;

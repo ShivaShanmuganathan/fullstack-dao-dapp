@@ -402,7 +402,7 @@ export default function Home() {
 
       <div className={styles.main}>
         <div>
-          <h1 className="font-Cinzel font-bold text-5xl pt-8">Welcome to the DAO</h1>
+          <h1 className="font-Cinzel font-bold text-5xl pt-8">Welcome to the DAO!</h1>
           {/* <div className={styles.description}>Welcome to the DAO!</div> */}
           <div className={styles.description}>
             Your CryptoDevs NFT Balance: {nftBalance}
@@ -416,14 +416,13 @@ export default function Home() {
               className={styles.button3}
               onClick={() => setSelectedTab("Create Proposal")}
             >
-              Create Proposal
+              CREATE PROPOSAL
             </button>
             <button
               className={styles.button}
-              
               onClick={() => setSelectedTab("View Proposals")}
             >
-              View Proposals
+              VIEW PROPOSALS
             </button>
           </div>
           {renderTabs()}
