@@ -321,6 +321,9 @@ export default function Home() {
             <input
               className="shadow appearance-none border rounded w-half py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
               type="number" 
+              required
+              min="0"
+              pattern="[0-9]+"
               placeholder="0"
               onChange={(e) => setFakeNftTokenId(e.target.value)}
             />
@@ -333,6 +336,9 @@ export default function Home() {
               <input
                 className="shadow appearance-none border rounded w-half py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
                 type="number" 
+                required
+                step="any"
+                min="0"
                 placeholder="0"
                 onChange={(e) => setCostOfToken(e.target.value)}
               />
