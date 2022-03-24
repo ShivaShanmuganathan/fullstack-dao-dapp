@@ -31,6 +31,8 @@ contract ProposalFactory {
     address[] public deployedProposals;
     ICryptoDevsNFT cryptoDevsNFT;
 
+    event ProposalCreated(address indexed proposer, address _nftMarketplace, uint256 indexed _nftTokenId, uint256 _nftPrice);
+
     constructor(address _cryptoDevsNFT) public {
         tokenImplementation = address(new CryptoDevsDAO());
         cryptoDevsNFT = ICryptoDevsNFT(_cryptoDevsNFT);
@@ -39,8 +41,9 @@ contract ProposalFactory {
     function createProposal(uint256 _nftTokenId, address _nftMarketplace, uint256 _nftPrice) public payable nftHolderOnly returns (address){
 
         address payable clone = payable(Clones.clone(tokenImplementation));
-        CryptoDevsDAO(clone).initialize{value: _nftPrice}(_nftTokenId, _nftMarketplace, address(cryptoDevsNFT));
+        CryptoDevsDAO(clone).initialize{value: _nftPrice}(_nftTokenId, _nftPrice, _nftMarketplace, address(cryptoDevsNFT));
         deployedProposals.push(clone);
+        emit ProposalCreated(msg.sender,  _nftMarketplace, _nftTokenId,  _nftPrice);
         return clone;
         
     }

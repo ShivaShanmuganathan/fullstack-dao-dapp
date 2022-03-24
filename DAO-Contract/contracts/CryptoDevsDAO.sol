@@ -48,6 +48,8 @@ contract CryptoDevsDAO is Initializable {
     struct Proposal {
         // nftTokenId - the tokenID of the NFT to purchase from FakeNFTMarketplace if the proposal passes
         uint256 nftTokenId;
+        // priceOfNft - the price of the NFT to purchase from FakeNFTMarketplace if the proposal passes
+        uint256 priceOfNft;
         // deadline - the UNIX timestamp until which this proposal is active. Proposal can be executed after the deadline has been exceeded.
         uint256 deadline;
         // yayVotes - number of yay votes for this proposal
@@ -74,14 +76,19 @@ contract CryptoDevsDAO is Initializable {
     IFakeNFTMarketplace nftMarketplace;
     ICryptoDevsNFT cryptoDevsNFT;
 
-    function initialize(uint256 _nftTokenId, address _nftMarketplace, address _cryptoDevsNFT) initializer public payable{
+    event VotingExecuted(address indexed voter, uint256 numVotes, Vote vote);
+    event ProposalExecuted(address _nftMarketplace, uint256 indexed _nftTokenId, uint256 _nftPrice, bool nft_purchased);
+    event EtherWithdraw(address indexed receiver, uint256 balance);
+
+    function initialize(uint256 _nftTokenId, uint256 _nftPrice, address _nftMarketplace, address _cryptoDevsNFT) initializer public payable{
 
         nftMarketplace = IFakeNFTMarketplace(_nftMarketplace);
         cryptoDevsNFT = ICryptoDevsNFT(_cryptoDevsNFT);
         require(nftMarketplace.available(_nftTokenId), "NFT_NOT_FOR_SALE");
         proposal.nftTokenId = _nftTokenId;
-        // Set the proposal's voting deadline to be (current time + 5 minutes)
-        proposal.deadline = block.timestamp + 5 minutes;
+        proposal.priceOfNft = _nftPrice;
+        // Set the proposal's voting deadline to be (current time + 10 minutes)
+        proposal.deadline = block.timestamp + 10 minutes;
         owner = msg.sender;
 
     }
@@ -111,8 +118,10 @@ contract CryptoDevsDAO is Initializable {
 
         if (vote == Vote.YAY) {
             proposal.yayVotes += numVotes;
+            emit VotingExecuted(msg.sender, numVotes, vote);
         } else {
             proposal.nayVotes += numVotes;
+            emit VotingExecuted(msg.sender, numVotes, vote);
         }
     }
 
@@ -126,20 +135,32 @@ contract CryptoDevsDAO is Initializable {
 
         // If the proposal has more YAY votes than NAY votes
         // purchase the NFT from the FakeNFTMarketplace
+        uint256 nftPrice = nftMarketplace.getPrice();
         
-        if (proposal.yayVotes > proposal.nayVotes) {
-            uint256 nftPrice = nftMarketplace.getPrice();
+        
+
+        if (proposal.yayVotes > proposal.nayVotes) {    
             require(address(this).balance >= nftPrice, "NOT_ENOUGH_FUNDS");
             nftMarketplace.purchase{value: nftPrice}(proposal.nftTokenId);
+            emit ProposalExecuted(address(nftMarketplace), proposal.nftTokenId, nftPrice, true);
         }
+
+        else {
+            emit ProposalExecuted(address(nftMarketplace), proposal.nftTokenId, nftPrice, false);
+        }
+
         proposal.executed = true;
+        
         withdrawEther();
     }
 
     
     /// @dev withdrawEther allows the contract owner (deployer) to withdraw the ETH from the contract
     function withdrawEther() internal {
-        payable(owner).transfer(address(this).balance);
+
+        emit EtherWithdraw(owner, address(this).balance);
+        payable(owner).transfer(address(this).balance);        
+
     }
 
 
