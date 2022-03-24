@@ -51,9 +51,13 @@ describe("Proposal Factory", function () {
     });
     sendEtherTxn.wait();
 
-    expect(await proposal_factory.createProposal(1, fakeNftMarketplace.address, ethers.utils.parseEther("1")))
-    .to.emit(proposal_factory, 'ProposalCreated')
-    .withArgs(owner.address, fakeNftMarketplace.address.address, 1, ethers.utils.parseEther("1"));
+    // await proposal_factory.createProposal(1, fakeNftMarketplace.address, ethers.utils.parseEther("1"));
+    
+    expect(await proposal_factory.createProposal(1, fakeNftMarketplace.address, ethers.utils.parseEther("1")) ).to.emit(proposal_factory, 'ProposalCreated');
+
+    // expect(await proposal_factory.createProposal(1, fakeNftMarketplace.address, ethers.utils.parseEther("1")))
+    // .to.emit(proposal_factory, 'ProposalCreated')
+    // .withArgs(owner.address, fakeNftMarketplace.address.address, 1, ethers.utils.parseEther("1"));
 
     console.log("Deployed Proposal Address", await proposal_factory.getDeployedProposals());
     proposed_contract = await Proposal.attach((await proposal_factory.getDeployedProposals())[0]);
@@ -64,7 +68,12 @@ describe("Proposal Factory", function () {
     console.log("Proposal Contract Balance ", ethers.utils.formatEther(await ethers.provider.getBalance(proposed_contract.address)));
     console.log("Proposal Factory Contract Balance ", ethers.utils.formatEther(await ethers.provider.getBalance(proposal_factory.address)));
     
-    await proposed_contract.voteOnProposal(0);
+    expect(await proposed_contract.voteOnProposal(0))
+    .to.emit(proposed_contract, 'VotingExecuted')
+    .withArgs(owner.address, 1, 0);
+    // expect(await proposal_factory.createProposal(1, fakeNftMarketplace.address, ethers.utils.parseEther("1")))
+    // .to.emit(proposal_factory, 'ProposalCreated')
+    // .withArgs(owner.address, fakeNftMarketplace.address.address, 1, ethers.utils.parseEther("1"));
 
     proposalTxn = await proposed_contract.getProposal();
 
@@ -78,7 +87,9 @@ describe("Proposal Factory", function () {
     // INCREASE TIME AND EXECUTE PROPOSAL
     await ethers.provider.send('evm_increaseTime', [1800]);
     await ethers.provider.send('evm_mine');
-    await proposed_contract.executeProposal();
+    expect(await proposed_contract.executeProposal())
+    .to.emit(proposed_contract, 'ProposalExecuted')
+    .to.emit(proposed_contract, 'EtherWithdraw');
     
     console.log("Proposal Contract Balance After Execution ", ethers.utils.formatEther(await ethers.provider.getBalance(proposed_contract.address)));
     console.log("Owner Of Proposal Contract",await proposed_contract.owner())
@@ -131,9 +142,10 @@ describe("Proposal Factory", function () {
 
     // await proposal_factory.createProposal(1, fakeNftMarketplace.address, ethers.utils.parseEther("1"));
 
-    expect(await proposal_factory.createProposal(1, fakeNftMarketplace.address, ethers.utils.parseEther("1")))
-    .to.emit(proposal_factory, 'ProposalCreated')
-    .withArgs(owner.address, fakeNftMarketplace.address.address, 1, ethers.utils.parseEther("1"));
+    expect(await proposal_factory.createProposal(1, fakeNftMarketplace.address, ethers.utils.parseEther("1")) ).to.emit(proposal_factory, 'ProposalCreated');
+    // expect(await proposal_factory.createProposal(1, fakeNftMarketplace.address, ethers.utils.parseEther("1")))
+    // .to.emit(proposal_factory, 'ProposalCreated')
+    // .withArgs(owner.address, fakeNftMarketplace.address.address, 1, ethers.utils.parseEther("1"));
 
     console.log("Deployed Proposal Address", await proposal_factory.getDeployedProposals());
     proposed_contract = await Proposal.attach((await proposal_factory.getDeployedProposals())[0]);
@@ -144,7 +156,9 @@ describe("Proposal Factory", function () {
     console.log("Proposal Contract Balance ", ethers.utils.formatEther(await ethers.provider.getBalance(proposed_contract.address)));
     console.log("Proposal Factory Contract Balance ", ethers.utils.formatEther(await ethers.provider.getBalance(proposal_factory.address)));
     
-    await proposed_contract.voteOnProposal(1);
+    expect(await proposed_contract.voteOnProposal(1))
+    .to.emit(proposed_contract, 'VotingExecuted')
+    .withArgs(owner.address, 1, 1);
 
     proposalTxn = await proposed_contract.getProposal();
 
@@ -156,7 +170,9 @@ describe("Proposal Factory", function () {
     // INCREASE TIME AND EXECUTE PROPOSAL
     await ethers.provider.send('evm_increaseTime', [1800]);
     await ethers.provider.send('evm_mine');
-    await proposed_contract.executeProposal();
+    expect(await proposed_contract.executeProposal())
+    .to.emit(proposed_contract, 'ProposalExecuted')
+    .to.emit(proposed_contract, 'EtherWithdraw');
     
     console.log("Proposal Contract Balance After Execution ", ethers.utils.formatEther(await ethers.provider.getBalance(proposed_contract.address)));
     console.log("Owner Of Proposal Contract",await proposed_contract.owner())
