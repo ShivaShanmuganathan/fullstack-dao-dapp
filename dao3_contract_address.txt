@@ -1,0 +1,7 @@
+All Contracts Are Deployed On The Rinkeby Network
+
+NFT Collection deployed to:  0xcB8Af55f50e83D3B18666E49EE6daE471aD923eF
+FakeNFTMarketplace deployed to:  0x910B9aD5ad805a08Ee8ABA59d5051D433A85912d
+ProposalFactory deployed to:  0xaFbDE2db5e54fF8f9219eb2311dfF01DA1185a7E
+Proposal 1 deployed to: 0x75b9761d40742953D4A39342De10Df691c82A545
+Proposal 2 deployed to: 0xc0f0Bc3bEebf98942FaafDa5F7ddb22548127c05

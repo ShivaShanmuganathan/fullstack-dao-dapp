@@ -1,4 +1,4 @@
-export const CRYPTODEVS_DAO_CONTRACT_ADDRESS = "0xF2ff743e75933B97AA8C93d1E330821F0817919b";
+export const CRYPTODEVS_DAO_CONTRACT_ADDRESS = "0xaFbDE2db5e54fF8f9219eb2311dfF01DA1185a7E";
 export const CRYPTODEVS_NFT_CONTRACT_ADDRESS = "0xcB8Af55f50e83D3B18666E49EE6daE471aD923eF";
 export const FAKE_NFT_MARKETPLACE_ADDRESS = "0xb71a30410Bd9c13B96ADD7cd05C4713af204377B";
 export const CRYPTODEVS_DAO_ABI = [
@@ -12,6 +12,43 @@ export const CRYPTODEVS_DAO_ABI = [
     ],
     "stateMutability": "nonpayable",
     "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "proposer",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "cloneAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_nftMarketplace",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "_nftTokenId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_nftPrice",
+        "type": "uint256"
+      }
+    ],
+    "name": "ProposalCreated",
+    "type": "event"
   },
   {
     "stateMutability": "payable",
@@ -82,7 +119,7 @@ export const CRYPTODEVS_DAO_ABI = [
     "stateMutability": "payable",
     "type": "receive"
   }
-];
+  ];
 export const CRYPTODEVS_NFT_ABI = [
     {
       "inputs": [
@@ -668,6 +705,81 @@ export const CRYPTODEVS_NFT_ABI = [
   ];
 export const PROPOSAL_ABI = [
   {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "receiver",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "balance",
+        "type": "uint256"
+      }
+    ],
+    "name": "EtherWithdraw",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "_nftMarketplace",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "_nftTokenId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "_nftPrice",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "bool",
+        "name": "nft_purchased",
+        "type": "bool"
+      }
+    ],
+    "name": "ProposalExecuted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "voter",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "numVotes",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "enum CryptoDevsDAO.Vote",
+        "name": "vote",
+        "type": "uint8"
+      }
+    ],
+    "name": "VotingExecuted",
+    "type": "event"
+  },
+  {
     "stateMutability": "payable",
     "type": "fallback"
   },
@@ -687,6 +799,11 @@ export const PROPOSAL_ABI = [
           {
             "internalType": "uint256",
             "name": "nftTokenId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "priceOfNft",
             "type": "uint256"
           },
           {
@@ -726,6 +843,11 @@ export const PROPOSAL_ABI = [
         "type": "uint256"
       },
       {
+        "internalType": "uint256",
+        "name": "_nftPrice",
+        "type": "uint256"
+      },
+      {
         "internalType": "address",
         "name": "_nftMarketplace",
         "type": "address"
@@ -761,6 +883,11 @@ export const PROPOSAL_ABI = [
       {
         "internalType": "uint256",
         "name": "nftTokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "priceOfNft",
         "type": "uint256"
       },
       {
