@@ -50,7 +50,10 @@ describe("Proposal Factory", function () {
       value: ethers.utils.parseEther("1.0"), // Sends exactly 1.0 ether
     });
     sendEtherTxn.wait();
-    await proposal_factory.createProposal(1, fakeNftMarketplace.address, ethers.utils.parseEther("1"));
+
+    expect(await proposal_factory.createProposal(1, fakeNftMarketplace.address, ethers.utils.parseEther("1")))
+    .to.emit(proposal_factory, 'ProposalCreated')
+    .withArgs(owner.address, fakeNftMarketplace.address.address, 1, ethers.utils.parseEther("1"));
 
     console.log("Deployed Proposal Address", await proposal_factory.getDeployedProposals());
     proposed_contract = await Proposal.attach((await proposal_factory.getDeployedProposals())[0]);
@@ -126,7 +129,11 @@ describe("Proposal Factory", function () {
     });
     sendEtherTxn.wait();
 
-    await proposal_factory.createProposal(1, fakeNftMarketplace.address, ethers.utils.parseEther("1"));
+    // await proposal_factory.createProposal(1, fakeNftMarketplace.address, ethers.utils.parseEther("1"));
+
+    expect(await proposal_factory.createProposal(1, fakeNftMarketplace.address, ethers.utils.parseEther("1")))
+    .to.emit(proposal_factory, 'ProposalCreated')
+    .withArgs(owner.address, fakeNftMarketplace.address.address, 1, ethers.utils.parseEther("1"));
 
     console.log("Deployed Proposal Address", await proposal_factory.getDeployedProposals());
     proposed_contract = await Proposal.attach((await proposal_factory.getDeployedProposals())[0]);
