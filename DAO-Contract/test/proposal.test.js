@@ -39,13 +39,18 @@ describe("Proposal Factory", function () {
 
     // Deploy the ProposalFactory contract third
     const ProposalFactory = await ethers.getContractFactory("ProposalFactory");    
-    const proposal_factory = await ProposalFactory.deploy();
+    const proposal_factory = await ProposalFactory.deploy(deployedCryptoDevsContract.address);
     await proposal_factory.deployed();
     console.log("ProposalFactory deployed to: ", proposal_factory.address);
 
     const Proposal = await ethers.getContractFactory("CryptoDevsDAO");
-
-    await proposal_factory.createProposal(1, fakeNftMarketplace.address, deployedCryptoDevsContract.address, {value: ethers.utils.parseEther("1")});
+    
+    const sendEtherTxn = await owner.sendTransaction({
+      to: proposal_factory.address,
+      value: ethers.utils.parseEther("1.0"), // Sends exactly 1.0 ether
+    });
+    sendEtherTxn.wait();
+    await proposal_factory.createProposal(1, fakeNftMarketplace.address, ethers.utils.parseEther("1"));
 
     console.log("Deployed Proposal Address", await proposal_factory.getDeployedProposals());
     proposed_contract = await Proposal.attach((await proposal_factory.getDeployedProposals())[0]);
@@ -109,13 +114,19 @@ describe("Proposal Factory", function () {
 
     // Deploy the ProposalFactory contract third
     const ProposalFactory = await ethers.getContractFactory("ProposalFactory");    
-    const proposal_factory = await ProposalFactory.deploy();
+    const proposal_factory = await ProposalFactory.deploy(deployedCryptoDevsContract.address);
     await proposal_factory.deployed();
     console.log("ProposalFactory deployed to: ", proposal_factory.address);
 
     const Proposal = await ethers.getContractFactory("CryptoDevsDAO");
+    
+    const sendEtherTxn = await owner.sendTransaction({
+      to: proposal_factory.address,
+      value: ethers.utils.parseEther("1.0"), // Sends exactly 1.0 ether
+    });
+    sendEtherTxn.wait();
 
-    await proposal_factory.createProposal(1, fakeNftMarketplace.address, deployedCryptoDevsContract.address, {value: ethers.utils.parseEther("1")});
+    await proposal_factory.createProposal(1, fakeNftMarketplace.address, ethers.utils.parseEther("1"));
 
     console.log("Deployed Proposal Address", await proposal_factory.getDeployedProposals());
     proposed_contract = await Proposal.attach((await proposal_factory.getDeployedProposals())[0]);

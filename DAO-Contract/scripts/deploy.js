@@ -13,13 +13,19 @@ async function main() {
 
   // Now deploy the proposal factory
   const ProposalFactory = await ethers.getContractFactory("ProposalFactory");    
-  const proposal_factory = await ProposalFactory.deploy();
+  const proposal_factory = await ProposalFactory.deploy(CRYPTODEVS_NFT_CONTRACT_ADDRESS);
   await proposal_factory.deployed();
   console.log("ProposalFactory deployed to: ", proposal_factory.address);
   const Proposal = await ethers.getContractFactory("CryptoDevsDAO");
 
+  const sendEtherTxn = await owner.sendTransaction({
+    to: proposal_factory.address,
+    value: ethers.utils.parseEther("0.05"), // Sends exactly 0.05 ether
+  });
+  sendEtherTxn.wait();
+
   // Now deploy the CryptoDevsDAO contract
-  (await proposal_factory.createProposal(1, fakeNftMarketplace.address, CRYPTODEVS_NFT_CONTRACT_ADDRESS, {value: ethers.utils.parseEther("0.01")})).wait();
+  (await proposal_factory.createProposal(1, fakeNftMarketplace.address, ethers.utils.parseEther("0.01"))).wait();
   console.log("createProposal complete")
 
   console.log("Deployed Proposal Address", await proposal_factory.getDeployedProposals());
