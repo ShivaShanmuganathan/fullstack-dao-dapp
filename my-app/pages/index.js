@@ -91,8 +91,10 @@ export default function Home() {
     try {
       const signer = await getProviderOrSigner(true);
       const daoContract = getDaoContractInstance(signer);
-      console.log("Token Cost", (parseEther(costOfToken)).toString() );
-      const txn = await daoContract.createProposal(fakeNftTokenId, FAKE_NFT_MARKETPLACE_ADDRESS, CRYPTODEVS_NFT_CONTRACT_ADDRESS);
+      // console.log("Token Cost", (parseEther(costOfToken)).toString() );
+      const txn = await daoContract.createProposal(fakeNftTokenId, FAKE_NFT_MARKETPLACE_ADDRESS, parseEther(costOfToken.toString()));
+      // const txn = await daoContract.getDeployedProposals();
+      
       setLoading(true);
       await txn.wait();
       await getNumProposalsInDAO();

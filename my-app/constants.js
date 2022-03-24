@@ -1,9 +1,15 @@
-export const CRYPTODEVS_DAO_CONTRACT_ADDRESS = "0xD891cd9aA57d40b5E8A0AF27D74e1A2C178E9045";
+export const CRYPTODEVS_DAO_CONTRACT_ADDRESS = "0xF2ff743e75933B97AA8C93d1E330821F0817919b";
 export const CRYPTODEVS_NFT_CONTRACT_ADDRESS = "0xcB8Af55f50e83D3B18666E49EE6daE471aD923eF";
-export const FAKE_NFT_MARKETPLACE_ADDRESS = "0x082877B29fA1aeAD3cb3dABD6dd97CfF18722c2D";
+export const FAKE_NFT_MARKETPLACE_ADDRESS = "0xb71a30410Bd9c13B96ADD7cd05C4713af204377B";
 export const CRYPTODEVS_DAO_ABI = [
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_cryptoDevsNFT",
+        "type": "address"
+      }
+    ],
     "stateMutability": "nonpayable",
     "type": "constructor"
   },
@@ -24,9 +30,9 @@ export const CRYPTODEVS_DAO_ABI = [
         "type": "address"
       },
       {
-        "internalType": "address",
-        "name": "_cryptoDevsNFT",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "_nftPrice",
+        "type": "uint256"
       }
     ],
     "name": "createProposal",
@@ -71,6 +77,10 @@ export const CRYPTODEVS_DAO_ABI = [
     ],
     "stateMutability": "view",
     "type": "function"
+  },
+  {
+    "stateMutability": "payable",
+    "type": "receive"
   }
 ];
 export const CRYPTODEVS_NFT_ABI = [
@@ -794,4 +804,4 @@ export const PROPOSAL_ABI = [
     "stateMutability": "payable",
     "type": "receive"
   }
-];
+  ];
