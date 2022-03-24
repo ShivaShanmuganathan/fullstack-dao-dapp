@@ -119,6 +119,7 @@ export default function Home() {
       const parsedProposal = {
         proposalId: id,
         nftTokenId: proposal.nftTokenId.toString(),
+        priceOfNft: formatEther(proposal.priceOfNft).toString() + " ETH",
         deadline: new Date(parseInt(proposal.deadline.toString()) * 1000),
         yayVotes: proposal.yayVotes.toString(),
         nayVotes: proposal.nayVotes.toString(),
@@ -376,10 +377,12 @@ export default function Home() {
       return (
         <div>
           {proposals.map((p, index) => (
+            
             <div key={index} className={styles.proposalCard}>
 
               <p>Proposal ID: {p.proposalId}</p>
               <p>Fake NFT to Purchase: {p.nftTokenId}</p>
+              <p>Price of NFT: {p.priceOfNft}</p>
               <p>Deadline: {p.deadline.toLocaleString()}</p>
               <p>Yay Votes: {p.yayVotes}</p>
               <p>Nay Votes: {p.nayVotes}</p>
