@@ -470,11 +470,74 @@ export default function Home() {
         </div>
       </div>
 
-      <footer className="font-Cinzel font-bold text-s text-center pt-8 pb-4">
-        <a href="https://github.com/ShivaShanmuganathan" target="_blank" rel="noopener noreferrer">
-        MADE WITH &#10084; BY SHIVA
-        </a>
+      <footer>
+      
+        <div className="grid lg:grid-cols-2 gap-4">
+
+          <div className="mb-6 md:mb-0">
+
+            <div className="font-Cinzel font-bold text-lg text-right pt-8 pb-4 ml-8">
+            <a href="https://github.com/ShivaShanmuganathan" target="_blank" rel="noopener noreferrer">
+              MADE BY SHIVA
+            </a>
+            </div>
+
+          </div>
+
+          <div className="mb-6 md:mb-0">
+
+            <div className="font-Cinzel font-bold text-lg text-right pt-8 pb-4 mr-20">
+            CHECK OUT NFT-COLLECTION HERE
+            </div>
+
+          </div>
+
+        </div>
+        
+        {/* <div className="font-Cinzel font-bold text-s text-center pt-8 pb-4">
+
+          <a href="https://github.com/ShivaShanmuganathan" target="_blank" rel="noopener noreferrer">
+              MADE WITH &#10084; BY SHIVA
+          </a>
+
+        </div> */}
+
       </footer>
+
+      {/* <footer class="bg-gray-100 text-center lg:text-left"> */}
+
+        {/* <div class="container p-6 text-gray-800">
+          <div class="grid lg:grid-cols-2 gap-4">
+            <div class="mb-6 md:mb-0">
+              <h5 class="font-medium mb-2 uppercase">Footer text</h5>
+
+              <p class="mb-4">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
+                molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae
+                aliquam voluptatem veniam, est atque cumque eum delectus sint!
+              </p>
+            </div>
+
+            <div class="mb-6 md:mb-0">
+              <h5 class="font-medium mb-2 uppercase">Footer text</h5>
+
+              <p class="mb-4">
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iste atque ea quis
+                molestias. Fugiat pariatur maxime quis culpa corporis vitae repudiandae
+                aliquam voluptatem veniam, est atque cumque eum delectus sint!
+              </p>
+            </div>
+          </div>
+        </div> */}
+
+        {/* <div class="text-center text-gray-700 p-4" style="background-color: rgba(0, 0, 0, 0.2);">
+          © 2021 Copyright:
+          <a class="text-gray-800" href="https://tailwind-elements.com/">Tailwind Elements</a>
+        </div> */}
+      
+      {/* </footer> */}
+
+
     </div>
   );
 }
