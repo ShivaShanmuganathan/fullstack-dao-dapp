@@ -476,7 +476,7 @@ export default function Home() {
 
           <div className="mb-6 md:mb-0">
 
-            <div className="font-Cinzel font-bold text-lg text-right pt-8 pb-4 ml-8">
+            <div className="font-Cinzel font-bold text-lg text-right pt-8 pb-4 ml-8 content-center">
             <a href="https://github.com/ShivaShanmuganathan" target="_blank" rel="noopener noreferrer">
               MADE BY SHIVA
             </a>
@@ -487,7 +487,10 @@ export default function Home() {
           <div className="mb-6 md:mb-0">
 
             <div className="font-Cinzel font-bold text-lg text-right pt-8 pb-4 mr-20">
-            CHECK OUT NFT-COLLECTION HERE
+            <a href="https://nft-collection-dapp-kappa.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-orange-700">
+              CHECK OUT NFT-COLLECTION HERE
+            </a>
+            
             </div>
 
           </div>
