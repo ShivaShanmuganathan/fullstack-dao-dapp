@@ -6,26 +6,6 @@ import "@openzeppelin/contracts/proxy/Clones.sol";
 import "./CryptoDevsDAO.sol";
 
 
-/**
- * Minimal interface for CryptoDevsNFT containing only two functions
- * that we are interested in
- */
-// interface ICryptoDevsNFT {
-//     /// @dev balanceOf returns the number of NFTs owned by the given address
-//     /// @param owner - address to fetch number of NFTs for
-//     /// @return Returns the number of NFTs owned
-//     function balanceOf(address owner) external view returns (uint256);
-
-//     /// @dev tokenOfOwnerByIndex returns a tokenID at given index for owner
-//     /// @param owner - address to fetch the NFT TokenID for
-//     /// @param index - index of NFT in owned tokens array to fetch
-//     /// @return Returns the TokenID of the NFT
-//     function tokenOfOwnerByIndex(address owner, uint256 index)
-//         external
-//         view
-//         returns (uint256);
-// }
-
 contract ProposalFactory {
     address immutable tokenImplementation;
     address[] public deployedProposals;
@@ -33,11 +13,18 @@ contract ProposalFactory {
 
     event ProposalCreated(address indexed proposer, address indexed cloneAddress, address _nftMarketplace, uint256 indexed _nftTokenId, uint256 _nftPrice);
 
+    /// @notice Constructor function initializes the implementation DAO proposal contract, and the crypto dev nft membership contract address 
+    /// @dev This is a minimal proxy contract, that uses the DAO proposal contract for implementing the calls made to clone contracts
     constructor(address _cryptoDevsNFT) public {
         tokenImplementation = address(new CryptoDevsDAO());
         cryptoDevsNFT = ICryptoDevsNFT(_cryptoDevsNFT);
     }
 
+    /// @notice createProposal - This function is used to create a new proposal contract.
+    /// @dev This function sends Ether to the newly created proposal contract
+    /// @param _nftTokenId The tokenId of NFT
+    /// @param _nftMarketplace The address of NFT marketplace
+    /// @param _nftPrice The price of the NFT token    
     function createProposal(uint256 _nftTokenId, address _nftMarketplace, uint256 _nftPrice) public payable nftHolderOnly returns (address){
 
         address payable clone = payable(Clones.clone(tokenImplementation));
@@ -48,14 +35,18 @@ contract ProposalFactory {
         
     }
 
+    /// @notice getDeployedProposals - This function returns the address of all the contracts deploying using this factory contract
     function getDeployedProposals() public view returns (address[] memory) {
         return deployedProposals;
     }
 
+    // The following two functions allow the contract to accept ETH deposits
+    // directly from a wallet without calling a function
     fallback() external payable {}
 
     receive() external payable {}
 
+    /// @notice nftHolderOnly modifier only allows the Crypto Dev NFT Holder to create and vote on propoal contract
     modifier nftHolderOnly() {
         require(cryptoDevsNFT.balanceOf(msg.sender) > 0, "NOT_A_DAO_MEMBER");
         _;

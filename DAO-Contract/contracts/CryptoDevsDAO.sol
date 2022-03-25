@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
-// import "@openzeppelin/contracts/access/Ownable.sol";
 
-// We will add the Interfaces here
+
+// IFakeNFTMarketplace & ICryptoDevsNFT Interfaces are added here
+
 /**
- * Interface for the FakeNFTMarketplace
+ * Minimal interface for FakeNFTMarketplace containing only three functions
+ * that we are interested in
  */
 interface IFakeNFTMarketplace {
     /// @dev getPrice() returns the price of an NFT from the FakeNFTMarketplace
@@ -57,17 +59,19 @@ contract CryptoDevsDAO is Initializable {
         // nayVotes - number of nay votes for this proposal
         uint256 nayVotes;
         // executed - whether or not this proposal has been executed yet. Cannot be executed before the deadline has been exceeded.
-        bool executed;
-        // voters - a mapping of CryptoDevsNFT tokenIDs to booleans indicating whether that NFT has already been used to cast a vote or not
-        
+        bool executed;        
     }
-
+    
+    // voters - a mapping of CryptoDevsNFT tokenIDs to booleans indicating whether that NFT has already been used to cast a vote or not
     mapping(uint256 => bool) voters;
 
+    // proposal - Struct containing the details of the proposal
     Proposal public proposal;
+
+    // owner - address of the owner of this contract
     address public owner;
 
-    // Create an enum named Vote containing possible options for a vote
+    // Vote Enum containing possible options for a vote
     enum Vote {
         YAY, // YAY = 0
         NAY // NAY = 1
@@ -76,10 +80,18 @@ contract CryptoDevsDAO is Initializable {
     IFakeNFTMarketplace nftMarketplace;
     ICryptoDevsNFT cryptoDevsNFT;
 
+
+    // Events to denote that voting, proposal and withdrawal has been completed
     event VotingExecuted(address indexed voter, uint256 numVotes, Vote vote);
     event ProposalExecuted(address _nftMarketplace, uint256 indexed _nftTokenId, uint256 _nftPrice, bool nft_purchased);
     event EtherWithdraw(address indexed receiver, uint256 balance);
 
+    /// @notice initialize function initialized the proposal
+    /// @dev Only if the tokenId is available in the nftMarketplace, this proposal can be initialized, ether is transferred from factory contract to this proposal
+    /// @param _nftTokenId - contains the tokenId of the NFT
+    /// @param _nftPrice - contains the price of the nft in the marketplace
+    /// @param _nftMarketplace - contains the address of the nft marketplace
+    /// @param _cryptoDevsNFT - contains the address of the crypto dev nft membership address
     function initialize(uint256 _nftTokenId, uint256 _nftPrice, address _nftMarketplace, address _cryptoDevsNFT) initializer public payable{
 
         nftMarketplace = IFakeNFTMarketplace(_nftMarketplace);
@@ -100,8 +112,7 @@ contract CryptoDevsDAO is Initializable {
         nftHolderOnly
         activeProposalOnly
     {
-        // Proposal storage proposal = proposals[proposalIndex];
-
+        
         uint256 voterNFTBalance = cryptoDevsNFT.balanceOf(msg.sender);
         uint256 numVotes = 0;
 
@@ -131,8 +142,7 @@ contract CryptoDevsDAO is Initializable {
         nftHolderOnly
         inactiveProposalOnly
     {
-        // Proposal storage proposal = proposals[proposalIndex];
-
+        
         // If the proposal has more YAY votes than NAY votes
         // purchase the NFT from the FakeNFTMarketplace
         uint256 nftPrice = nftMarketplace.getPrice();
@@ -163,14 +173,14 @@ contract CryptoDevsDAO is Initializable {
 
     }
 
-
+    /// @dev getProposal returns the proposal struct 
     function getProposal() public view returns (Proposal memory) {
     
         return proposal;
 
     }
 
-    // Create a modifier which only allows a function to be
+    // Modifier which only allows a function to be
     // called if the given proposal's deadline has not been exceeded yet
     modifier activeProposalOnly() {
         require(
@@ -180,7 +190,7 @@ contract CryptoDevsDAO is Initializable {
         _;
     }
 
-    // Create a modifier which only allows a function to be
+    // Modifier which only allows a function to be
     // called if the given proposals' deadline HAS been exceeded
     // and if the proposal has not yet been executed
     modifier inactiveProposalOnly() {
