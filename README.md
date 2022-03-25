@@ -1,8 +1,13 @@
 # [Full Stack DAO Dapp](https://fullstack-dao-dapp.vercel.app/) 
+
 ## Project is live in the 🔗Rinkeby Test Network🔗
 - ### [Check Out 🚀 Live DAO Project ](https://fullstack-dao-dapp.vercel.app/)
 - ### [Check Out 🚀 NFT Minting Dapp ](https://nft-collection-dapp-kappa.vercel.app/) ⚠ Mint your NFT to participate in the DAO ⚠
 - ### Collect your Rinkeby-Eth from [this faucet](https://faucets.chain.link/rinkeby)
+
+## Project GIF
+![capture2](./Copy-of-CryptoDevs-DAO-25-March-2022.gif)
+![capture](./Copy-of-Crypto-Devs-25-March-2022.gif)
 
 ## Project Description 📃
 
