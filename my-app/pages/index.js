@@ -39,9 +39,26 @@ export default function Home() {
   const ref = useRef();
   const [lottie, setLottie] = useState("");
 
+  const checkNetwork = async() => {
+    const { ethereum } = window;
+    let chainId = await ethereum.request({ method: 'eth_chainId' })
+    if (chainId !== '0x4') {
+      // window.alert("Please switch to the Matic Test Network!");
+      // throw new Error("Please switch to the Matic Test Network");
+      
+      window.alert("This Dapp works on Rinkeby Test Network Only. Please Approve to switch to Rinkeby");
+      await ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId:'0x4' }],
+      })  
+    }
+    
+  }
+
   // Helper function to connect wallet
   const connectWallet = async () => {
     try {
+      await checkNetwork();
       await getProviderOrSigner();
       setWalletConnected(true);
     } catch (error) {
