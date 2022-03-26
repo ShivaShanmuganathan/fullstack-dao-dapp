@@ -2,6 +2,8 @@ require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-etherscan");
 require('hardhat-deploy')
 require("dotenv").config({ path: ".env" });
+require('solidity-coverage')
+require("hardhat-gas-reporter");
 
 const ALCHEMY_API_KEY_URL = process.env.ALCHEMY_API_KEY_URL;
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY;

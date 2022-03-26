@@ -26,6 +26,14 @@ describe("Proposal Factory", function () {
     );
     await deployedCryptoDevsContract.mint({value: ethers.utils.parseEther("0.001")});
 
+    await deployedCryptoDevsContract.setPaused(true);
+    await expect (deployedCryptoDevsContract.mint({value: ethers.utils.parseEther("0.001")})).to.be.revertedWith('Contract currently paused');
+    await deployedCryptoDevsContract.setPaused(false);
+    await deployedCryptoDevsContract.tokenURI(1);
+
+    await expect(deployedCryptoDevsContract.withdraw()).to.not.be.reverted;
+
+
 
 
     // Deploy the FakeNFTMarketplace contract second
@@ -35,7 +43,7 @@ describe("Proposal Factory", function () {
     const fakeNftMarketplace = await FakeNFTMarketplace.deploy();
     await fakeNftMarketplace.deployed();
     console.log("FakeNFTMarketplace deployed to: ", fakeNftMarketplace.address);
-
+    console.log("Token 1 Availability", await fakeNftMarketplace.available(1));
 
     // Deploy the ProposalFactory contract third
     const ProposalFactory = await ethers.getContractFactory("ProposalFactory");    
@@ -71,6 +79,10 @@ describe("Proposal Factory", function () {
     expect(await proposed_contract.voteOnProposal(0))
     .to.emit(proposed_contract, 'VotingExecuted')
     .withArgs(owner.address, 1, 0);
+
+    
+
+
     // expect(await proposal_factory.createProposal(1, fakeNftMarketplace.address, ethers.utils.parseEther("1")))
     // .to.emit(proposal_factory, 'ProposalCreated')
     // .withArgs(owner.address, fakeNftMarketplace.address.address, 1, ethers.utils.parseEther("1"));
@@ -93,6 +105,7 @@ describe("Proposal Factory", function () {
     
     console.log("Proposal Contract Balance After Execution ", ethers.utils.formatEther(await ethers.provider.getBalance(proposed_contract.address)));
     console.log("Owner Of Proposal Contract",await proposed_contract.owner())
+    console.log("Token 1 Availability After Execution", await fakeNftMarketplace.available(1));
     
     console.log("Proposal Factory Contract Balance After Execution ", ethers.utils.formatEther(await ethers.provider.getBalance(proposal_factory.address)));
     console.log("fakeNftMarketplace Contract Balance After Execution ", ethers.utils.formatEther(await ethers.provider.getBalance(fakeNftMarketplace.address)));
@@ -124,6 +137,7 @@ describe("Proposal Factory", function () {
     const fakeNftMarketplace = await FakeNFTMarketplace.deploy();
     await fakeNftMarketplace.deployed();
     console.log("FakeNFTMarketplace deployed to: ", fakeNftMarketplace.address);
+    
 
 
     // Deploy the ProposalFactory contract third

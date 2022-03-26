@@ -13,7 +13,7 @@
 
 ### [Full Stack DAO Project using OpenZeppelin's Minimal Proxy](https://fullstack-dao-dapp.vercel.app/)
 - Users need to mint the NFT from this [NFT Minting Dapp.](https://nft-collection-dapp-kappa.vercel.app/)
-- Only the Crypto Dev NFT Holders will be able to create proposals and vote.
+- Only Crypto Dev NFT Holders will be able to create proposals and vote.
 - Proposals are created using [EIP 1167 minimal proxies.](https://eips.ethereum.org/EIPS/eip-1167)
 - NFT Holders can create proposals by specifying the parameters required to make a purchase from the NFT Marketplace.
 - On creation of a proposal, proposal factory contract sends Ether to the newly created proposal contract.
@@ -47,7 +47,7 @@ npx hardhat compile
 npx hardhat test
 ```
 
-### Environment variables (not needed for running project locally)
+### Environment variables (not needed for running project locally) l
 Create a `.env` file in the DAO-Contract folder and fill it up with the below instructions
 ``` shell
 // Go to https://www.alchemyapi.io, sign up, create
@@ -60,6 +60,11 @@ ALCHEMY_API_KEY_URL="YOUR-RINKEBY-ALCHEMY-KEY"
 // Be aware of NEVER putting real Ether into testing accounts
 RINKEBY_PRIVATE_KEY="YOUR-PRIVATE-KEY"
 ```
+## Gas Report ⛽
+![test-coverage](./test-coverage.JPG)
+
+## Test Coverage Report 🛸
+![test-coverage](./gas-report.JPG)
 
 
 
