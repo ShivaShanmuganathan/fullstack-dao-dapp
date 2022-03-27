@@ -61,10 +61,11 @@ ALCHEMY_API_KEY_URL="YOUR-RINKEBY-ALCHEMY-KEY"
 RINKEBY_PRIVATE_KEY="YOUR-PRIVATE-KEY"
 ```
 ## Gas Report ⛽
-![test-coverage](./test-coverage.JPG)
+![test-coverage](./gas-report.JPG)
+
 
 ## Test Coverage Report 🛸
-![test-coverage](./gas-report.JPG)
+![test-coverage](./test-coverage-report-dao.JPG)
 
 
 
