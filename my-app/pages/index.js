@@ -327,6 +327,15 @@ export default function Home() {
         <div className={styles.description}>
           You do not own any CryptoDevs NFTs. <br />
           <b>You cannot create or vote on proposals</b>
+          <br />
+          <form action="https://nft-collection-dapp-kappa.vercel.app/" method="get" target="_blank">
+          <button
+              className={styles.button2}
+              type="submit"
+            >
+              MINT NFT
+          </button>
+          </form>
         </div>
       );
     } else {
